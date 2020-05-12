@@ -1,0 +1,32 @@
+Sweep line:
+Moves downwards (-y)
+
+Beach line: set of parabolic arcs
+Site is equadistant to parabolic arc near it and the sweep line (creates parabola shape)
+When two sites are equidistant to the same parabola it creates a Voronoi vertex and traces
+a Voronoi cell edge
+
+Circle event: Empty circle (contains no sites) and touches 3+ sites on border, removes an arc
+Represented by lowest point touching 3+ sites (may be false and removed later)
+Site event: Sweep line encounters new site point, new arc breaks original in two 
+(inserts itself in middle)
+Represented by site coords
+Voronoi vertex: when two or more breakpoints meet/fuse
+
+State datastructures:
+Diagram state - 
+doubly linked list of half-edge (each ei has pointer to cell table entry, start/end vertices of half-edge,
+prev/next half-edges in CCW chain, twin half-edge (other direction) 
+vertex table (each vi has pointers to half-edges),
+cell table (each ci has pointers to half-edges)
+
+Bi-directional half-edge  pointers from one voronoi vertex to another
+Cells created by chain of CCW uni-directional half-edges
+
+Beach line state - track breakpoints, track arcs on beach line
+Sweep line state - pqueue sorting on decreasing y-coordinate
+
+RB-Tree - nodes are breakpoint site pairs, leafs are arcs (by site generated) with pointer to potential
+circle event
+
+Event Queue - site event, circle event (prioritzed on y-coord)
